@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Fractal Generator by bboeck</title>
+  <link rel="stylesheet" href="fractal.css"/>
+  <script src="fractal.js"></script>
+</head>
+<body onload="init()">
+<canvas id="drawArea" class="drawArea"></canvas>
+<script>
+  function resizeCanvas() {
+    console.log("Resize");
+    const canvas = document.getElementById('drawArea');
+    canvas.width = 320; //window.innerWidth;
+    canvas.height = 200; //window.innerHeight;
+    drawFractal(-1, 0, 5, 90);
+  }
+
+  function init() {
+    console.log("Init...");
+    window.addEventListener('resize', resizeCanvas, false);
+    resizeCanvas();
+  }
+</script>
+</body>
+</html>
