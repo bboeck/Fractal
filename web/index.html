@@ -8,21 +8,49 @@
   <script src="./fractal.js"></script>
 </head>
 <body onload="init()">
-<canvas id="drawArea" class="drawArea"></canvas>
-<script>
-  function resizeCanvas() {
-    console.log("Resize");
-    const canvas = document.getElementById('drawArea');
-    canvas.width = 320; //window.innerWidth;
-    canvas.height = 200; //window.innerHeight;
-    drawFractal(-1, 0, 5, 90);
-  }
+  <div class="fractal">
+    <canvas id="drawArea" class="drawArea"></canvas>
+  </div>
+  <div class="coords">
+    <label>X</label>
+    <input type="number" id="x" value="-1" step="0.05" onchange="redraw()">
+    <label>Y</label>
+    <input type="number" id="y" value = "0" step="0.05" onchange="redraw()">
+    <label>Height</label>
+    <input type="number" id="h" value = "5" step="0.5" onchange="redraw()">
+    <label>Angle</label>
+    <input type="number" id="angle" value = "90" onchange="redraw()">
+  </div>
+  <script>
+    function redraw() {
+      // calculate size of canvas. Should be a multiple of the original cga resolution.
+      const cgaWidth = 320;
+      const cgaHeight = 200;
+      const scaleFactorX = Math.max(1, Math.floor(window.innerWidth / cgaWidth))
+      const scaleFactorY = Math.max(1, Math.floor(window.innerHeight / cgaHeight))
+      const scaleFactor = Math.min(scaleFactorX, scaleFactorY)
 
-  function init() {
-    console.log("Init...");
-    window.addEventListener('resize', resizeCanvas, false);
-    resizeCanvas();
-  }
+      const canvas = document.getElementById('drawArea');
+      canvas.width = 320 * scaleFactor;
+      canvas.height = 200 * scaleFactor;
+      canvas.height = 200 * scaleFactor;
+
+      drawFractal(parseFloat(document.getElementById('x').value),
+          parseFloat(document.getElementById('y').value),
+          parseFloat(document.getElementById('h').value),
+          parseFloat(document.getElementById('angle').value),
+          scaleFactor)
+    }
+
+    function resizeCanvas() {
+      redraw()
+    }
+
+    function init() {
+      console.log("Init...");
+      window.addEventListener('resize', resizeCanvas, false);
+      resizeCanvas();
+    }
 </script>
 </body>
 </html>
